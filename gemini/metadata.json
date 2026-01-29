@@ -1,0 +1,5 @@
+{
+  "name": "Lunar Birthday Reminder",
+  "description": "A minimalist birthday management app with lunar-to-solar conversion, calendar visualization, and smart reminders using Framer Motion.",
+  "requestFramePermissions": []
+}
