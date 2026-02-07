@@ -56,6 +56,9 @@ jobs:
           npm run build
 
       - name: Build coze project
+        env:
+          BASE_PATH: /lunar-birthday-reminder/coze
+          ASSET_PREFIX: /lunar-birthday-reminder/coze
         run: |
           echo "Building coze..."
           cd coze
