@@ -31,9 +31,10 @@ jobs:
         with:
           version: 9
 
+      # GitHub Pages 部署在 /lunar-birthday-reminder/ 子路径下，资源必须带此前缀
       - name: Build cursor project
         env:
-          BASE_PATH: /cursor
+          BASE_PATH: /lunar-birthday-reminder/cursor
         run: |
           echo "Building cursor..."
           cd cursor
@@ -42,7 +43,7 @@ jobs:
 
       - name: Build gemini project
         env:
-          BASE_PATH: /gemini
+          BASE_PATH: /lunar-birthday-reminder/gemini
         run: |
           echo "Building gemini..."
           cd gemini
@@ -51,7 +52,7 @@ jobs:
 
       - name: Build kimi project
         env:
-          BASE_PATH: /kimi
+          BASE_PATH: /lunar-birthday-reminder/kimi
         run: |
           echo "Building kimi..."
           cd kimi
@@ -63,8 +64,8 @@ jobs:
           echo "Building coze..."
           cd coze
           pnpm install
-          # Set basePath for GitHub Pages
-          BASE_PATH=/coze ASSET_PREFIX=/coze pnpm run build
+          # Set basePath for GitHub Pages (部署在 /lunar-birthday-reminder/ 下)
+          BASE_PATH=/lunar-birthday-reminder/coze ASSET_PREFIX=/lunar-birthday-reminder/coze pnpm run build
 
       - name: Prepare deployment
         run: |
