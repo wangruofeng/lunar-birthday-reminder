@@ -32,25 +32,31 @@ jobs:
           version: 9
 
       - name: Build cursor project
+        env:
+          BASE_PATH: /cursor
         run: |
           echo "Building cursor..."
           cd cursor
           npm ci --legacy-peer-deps
-          BASE_PATH=/cursor npm run build
+          npm run build
 
       - name: Build gemini project
+        env:
+          BASE_PATH: /gemini
         run: |
           echo "Building gemini..."
           cd gemini
           npm ci --legacy-peer-deps
-          BASE_PATH=/gemini npm run build
+          npm run build
 
       - name: Build kimi project
+        env:
+          BASE_PATH: /kimi
         run: |
           echo "Building kimi..."
           cd kimi
           npm ci --legacy-peer-deps
-          BASE_PATH=/kimi npm run build
+          npm run build
 
       - name: Build coze project
         run: |
