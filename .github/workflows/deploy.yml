@@ -36,21 +36,21 @@ jobs:
           echo "Building cursor..."
           cd cursor
           npm ci --legacy-peer-deps
-          npm run build -- --base=/cursor/
+          BASE_PATH=/cursor npm run build
 
       - name: Build gemini project
         run: |
           echo "Building gemini..."
           cd gemini
           npm ci --legacy-peer-deps
-          npm run build -- --base=/gemini/
+          BASE_PATH=/gemini npm run build
 
       - name: Build kimi project
         run: |
           echo "Building kimi..."
           cd kimi
           npm ci --legacy-peer-deps
-          npm run build -- --base=/kimi/
+          BASE_PATH=/kimi npm run build
 
       - name: Build coze project
         run: |
