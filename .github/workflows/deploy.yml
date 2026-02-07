@@ -47,6 +47,8 @@ jobs:
           npm run build
 
       - name: Build kimi project
+        env:
+          BASE_PATH: /lunar-birthday-reminder/kimi/
         run: |
           echo "Building kimi..."
           cd kimi
