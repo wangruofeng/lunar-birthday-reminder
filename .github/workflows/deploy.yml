@@ -30,28 +30,28 @@ jobs:
         run: |
           echo "Building cursor..."
           cd cursor
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build -- --base=/cursor/
 
       - name: Build gemini project
         run: |
           echo "Building gemini..."
           cd gemini
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build -- --base=/gemini/
 
       - name: Build kimi project
         run: |
           echo "Building kimi..."
           cd kimi
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build -- --base=/kimi/
 
       - name: Build coze project
         run: |
           echo "Building coze..."
           cd coze
-          npm ci
+          npm ci --legacy-peer-deps
           # Set basePath for GitHub Pages
           BASE_PATH=/coze ASSET_PREFIX=/coze npm run build
 
