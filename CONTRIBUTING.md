@@ -30,7 +30,7 @@
 
 ### 文档与翻译
 
-- 根目录 `README.md`、`CONTRIBUTING.md`、`CHANGELOG.md` 的修改可直接提 PR
+- 根目录 `README.md`、`CONTRIBUTING.md`、`CHANGELOG.md`、`DEPLOYMENT.md` 的修改可直接提 PR
 - 子项目内的 README、注释、多语言文案（如 kimi 的 i18n）也欢迎改进与翻译
 
 ## 开发约定

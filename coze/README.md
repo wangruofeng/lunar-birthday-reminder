@@ -7,23 +7,23 @@
 ### 启动开发服务器
 
 ```bash
-coze dev
+pnpm dev
 ```
 
-启动后，在浏览器中打开 [http://localhost:5000](http://localhost:5000) 查看应用。
-
-开发服务器支持热更新，修改代码后页面会自动刷新。
+启动后，在浏览器中打开终端提示的地址（如 [http://localhost:5000](http://localhost:5000)）查看应用。开发服务器支持热更新。
 
 ### 构建生产版本
 
 ```bash
-coze build
+pnpm build
 ```
 
-### 启动生产服务器
+静态导出产物在 `out/` 目录，适用于 GitHub Pages 等静态托管。
+
+### 启动生产服务器（本地预览）
 
 ```bash
-coze start
+pnpm start
 ```
 
 ## 项目结构
@@ -348,6 +348,15 @@ export const useStore = create<Store>((set) => ({
 - [shadcn/ui 组件文档](https://ui.shadcn.com)
 - [Tailwind CSS 文档](https://tailwindcss.com/docs)
 - [React Hook Form](https://react-hook-form.com)
+
+## 部署到 GitHub Pages
+
+本项目通过 GitHub Actions 部署到子路径 `/lunar-birthday-reminder/coze`。构建时需设置环境变量：
+
+- `BASE_PATH=/lunar-birthday-reminder/coze`
+- `ASSET_PREFIX=/lunar-birthday-reminder/coze`
+
+详见仓库根目录 [DEPLOYMENT.md](../DEPLOYMENT.md)。
 
 ## 重要提示
 

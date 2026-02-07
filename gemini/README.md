@@ -18,3 +18,8 @@ View your app in AI Studio: https://ai.studio/apps/drive/1t1CyXpHkNOVy6tTk5JECel
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## 构建与部署
+
+- 生产构建：`npm run build`，产物在 `dist/`
+- 本项目使用相对路径 `base: './'`，部署到任意子路径均可正确加载资源；详见仓库根目录 [DEPLOYMENT.md](../DEPLOYMENT.md)。

@@ -61,6 +61,8 @@ npm run dev
 npm run build
 ```
 
+产物输出到 `dist/`。若部署到子路径（如 GitHub Pages 的 `/lunar-birthday-reminder/kimi/`），CI 会设置 `BASE_PATH`，本地默认使用相对路径 `./`。
+
 ### 预览生产构建
 
 ```bash

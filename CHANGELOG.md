@@ -8,6 +8,13 @@
 
 ### 修复
 
+#### 部署与构建
+- 修复 GitHub Pages 子路径部署时静态资源 404：站点部署在 `/lunar-birthday-reminder/` 下，资源需带此前缀或使用相对路径
+- **cursor / gemini**：Vite 使用相对路径 `base: './'`，适配任意子路径
+- **kimi**：构建时设置 `BASE_PATH=/lunar-birthday-reminder/kimi/`，避免访问 `.../kimi`（无尾部斜杠）时相对路径解析错误导致 404
+- **coze**：Next.js 构建时设置 `BASE_PATH` 与 `ASSET_PREFIX` 为 `/lunar-birthday-reminder/coze`，修复 `/_next/static/` 资源 404
+- 移除 gemini `index.html` 中错误的 `/index.css` 引用
+
 #### cursor 项目
 - 修复日历周起始日，从周一改为周日，符合国内使用习惯
 - 修复跨年生日的日历显示逻辑，正确标记农历12月的生日
