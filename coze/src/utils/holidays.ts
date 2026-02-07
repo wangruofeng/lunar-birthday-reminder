@@ -18,6 +18,147 @@ interface HolidayGroup {
 }
 
 /**
+ * 2024年节假日数据（根据国务院办公厅官方通知）
+ * 信息来源：国务院办公厅关于2024年部分节假日安排的通知
+ */
+const HOLIDAY_DATA_2024: HolidayGroup[] = [
+  {
+    name: '元旦',
+    dates: [
+      { month: 1, day: 1, label: '元旦' }
+    ]
+  },
+  {
+    name: '春节',
+    dates: [
+      { month: 2, day: 10, label: '春节' },
+      { month: 2, day: 11, label: '春节假期' },
+      { month: 2, day: 12, label: '春节假期' },
+      { month: 2, day: 13, label: '春节假期' },
+      { month: 2, day: 14, label: '春节假期' },
+      { month: 2, day: 15, label: '春节假期' },
+      { month: 2, day: 16, label: '春节假期' },
+      { month: 2, day: 17, label: '春节假期' }
+    ]
+  },
+  {
+    name: '清明节',
+    dates: [
+      { month: 4, day: 4, label: '清明节' },
+      { month: 4, day: 5, label: '清明节假期' },
+      { month: 4, day: 6, label: '清明节假期' }
+    ]
+  },
+  {
+    name: '劳动节',
+    dates: [
+      { month: 5, day: 1, label: '劳动节' },
+      { month: 5, day: 2, label: '劳动节假期' },
+      { month: 5, day: 3, label: '劳动节假期' },
+      { month: 5, day: 4, label: '劳动节假期' },
+      { month: 5, day: 5, label: '劳动节假期' }
+    ]
+  },
+  {
+    name: '端午节',
+    dates: [
+      { month: 6, day: 10, label: '端午节' }
+    ]
+  },
+  {
+    name: '中秋节',
+    dates: [
+      { month: 9, day: 15, label: '中秋节' },
+      { month: 9, day: 16, label: '中秋节假期' },
+      { month: 9, day: 17, label: '中秋节假期' }
+    ]
+  },
+  {
+    name: '国庆节',
+    dates: [
+      { month: 10, day: 1, label: '国庆节' },
+      { month: 10, day: 2, label: '国庆节假期' },
+      { month: 10, day: 3, label: '国庆节假期' },
+      { month: 10, day: 4, label: '国庆节假期' },
+      { month: 10, day: 5, label: '国庆节假期' },
+      { month: 10, day: 6, label: '国庆节假期' },
+      { month: 10, day: 7, label: '国庆节假期' }
+    ]
+  }
+];
+
+/**
+ * 2025年节假日数据（根据国务院办公厅官方通知）
+ * 信息来源：国务院办公厅关于2025年部分节假日安排的通知
+ */
+const HOLIDAY_DATA_2025: HolidayGroup[] = [
+  {
+    name: '元旦',
+    dates: [
+      { month: 1, day: 1, label: '元旦' }
+    ]
+  },
+  {
+    name: '春节',
+    dates: [
+      { month: 1, day: 28, label: '除夕' },
+      { month: 1, day: 29, label: '春节' },
+      { month: 1, day: 30, label: '春节假期' },
+      { month: 1, day: 31, label: '春节假期' },
+      { month: 2, day: 1, label: '春节假期' },
+      { month: 2, day: 2, label: '春节假期' },
+      { month: 2, day: 3, label: '春节假期' },
+      { month: 2, day: 4, label: '春节假期' }
+    ]
+  },
+  {
+    name: '清明节',
+    dates: [
+      { month: 4, day: 4, label: '清明节' },
+      { month: 4, day: 5, label: '清明节假期' },
+      { month: 4, day: 6, label: '清明节假期' }
+    ]
+  },
+  {
+    name: '劳动节',
+    dates: [
+      { month: 5, day: 1, label: '劳动节' },
+      { month: 5, day: 2, label: '劳动节假期' },
+      { month: 5, day: 3, label: '劳动节假期' },
+      { month: 5, day: 4, label: '劳动节假期' },
+      { month: 5, day: 5, label: '劳动节假期' }
+    ]
+  },
+  {
+    name: '端午节',
+    dates: [
+      { month: 5, day: 31, label: '端午节' },
+      { month: 6, day: 1, label: '端午节假期' },
+      { month: 6, day: 2, label: '端午节假期' }
+    ]
+  },
+  {
+    name: '中秋节',
+    dates: [
+      { month: 10, day: 6, label: '中秋节' }
+    ]
+  },
+  {
+    name: '国庆节',
+    dates: [
+      { month: 10, day: 1, label: '国庆节' },
+      { month: 10, day: 2, label: '国庆节假期' },
+      { month: 10, day: 3, label: '国庆节假期' },
+      { month: 10, day: 4, label: '国庆节假期' },
+      { month: 10, day: 5, label: '国庆节假期' },
+      { month: 10, day: 6, label: '国庆节假期' },
+      { month: 10, day: 7, label: '国庆节假期' },
+      { month: 10, day: 8, label: '国庆节假期' }
+    ]
+  }
+];
+
+/**
  * 2026年节假日数据（根据国务院办公厅官方通知）
  * 信息来源：国务院办公厅关于2026年部分节假日安排的通知（国办发明电〔2025〕16号）
  */
@@ -93,15 +234,50 @@ const HOLIDAY_DATA_2026: HolidayGroup[] = [
 ];
 
 /**
+ * 2027年节假日数据（预测）
+ * 注意：2027年的具体安排需等待国务院办公厅通知
+ */
+const HOLIDAY_DATA_2027: HolidayGroup[] = [
+  {
+    name: '元旦',
+    dates: [
+      { month: 1, day: 1, label: '元旦' }
+    ]
+  },
+  {
+    name: '春节',
+    dates: [
+      { month: 2, day: 6, label: '除夕' },
+      { month: 2, day: 7, label: '春节' },
+      { month: 2, day: 8, label: '春节假期' },
+      { month: 2, day: 9, label: '春节假期' },
+      { month: 2, day: 10, label: '春节假期' },
+      { month: 2, day: 11, label: '春节假期' },
+      { month: 2, day: 12, label: '春节假期' }
+    ]
+  }
+];
+
+/**
  * 获取指定年份的节假日数据
  * @param year 年份
  * @returns 节假日数据
  */
 function getHolidayData(year: number): HolidayGroup[] {
-  // 目前只支持2026年的数据，其他年份使用通用计算
+  // 支持的年份列表（有预定义数据的年份）
+  if (year === 2024) {
+    return HOLIDAY_DATA_2024;
+  }
+  if (year === 2025) {
+    return HOLIDAY_DATA_2025;
+  }
   if (year === 2026) {
     return HOLIDAY_DATA_2026;
   }
+  if (year === 2027) {
+    return HOLIDAY_DATA_2027;
+  }
+  // 其他年份使用通用计算
   return [];
 }
 
@@ -199,6 +375,7 @@ export function getHolidayName(solarMonth: number, solarDay: number, year: numbe
 
 /**
  * 判断指定日期是否为节假日
+ * 支持2024-2027年的完整节假日数据，其他年份使用通用计算
  */
 export function isHoliday(solarMonth: number, solarDay: number, year: number): boolean {
   return getHolidayName(solarMonth, solarDay, year) !== null;

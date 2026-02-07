@@ -99,18 +99,14 @@ export default function CalendarCell({
     </div>
   );
 
-  // 如果不在当前月份，完全隐藏该单元格
-  if (!inCurrentMonth) {
-    return null;
-  }
-
+  // 不在当前月份的单元格也渲染，保持网格布局正确
   const motionProps = {
-    whileHover: { scale: 1.02 },
-    whileTap: { scale: 0.97 },
+    whileHover: inCurrentMonth ? { scale: 1.02 } : {},
+    whileTap: inCurrentMonth ? { scale: 0.97 } : {},
     transition: { duration: 0.15 }
   };
 
-  if (isUpcomingBirthdayDay) {
+  if (isUpcomingBirthdayDay && inCurrentMonth) {
     motionProps.animate = {
       boxShadow: [
         '0 0 0 0 rgba(248, 113, 113, 0.4)',

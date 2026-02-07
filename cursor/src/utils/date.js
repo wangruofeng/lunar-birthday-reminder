@@ -58,14 +58,16 @@ export function startOfDay(date) {
 // 计算某年某月的所有天
 export function getMonthMatrix(year, monthIndex) {
   const firstDay = new Date(year, monthIndex, 1);
-  const firstWeekday = firstDay.getDay(); // 0-6, 周日为 0
+  let firstWeekday = firstDay.getDay(); // 0-6, 周日为 0
 
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const daysInPrevMonth = new Date(year, monthIndex, 0).getDate();
 
   const cells = [];
 
-  // 前置空位（上个月）
+  // 前置空位（上个月）- 日历以周日为第一列
+  // 如果第一天是周日(firstWeekday=0)，不需要前置空位
+  // 如果第一天是周一(firstWeekday=1)，需要1个前置空位（上周日）
   for (let i = 0; i < firstWeekday; i++) {
     const day = daysInPrevMonth - firstWeekday + 1 + i;
     cells.push({

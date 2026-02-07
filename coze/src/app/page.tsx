@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Birthday } from '@/types/birthday';
 import { getBirthdays } from '@/utils/storage';
@@ -23,33 +23,34 @@ export default function BirthdayReminderApp() {
     setBirthdays(loaded);
   }, []);
 
-  const handleAddBirthday = (birthday: Birthday) => {
-    setBirthdays([...birthdays, birthday]);
-  };
+  const handleAddBirthday = useCallback((birthday: Birthday) => {
+    setBirthdays(prev => [...prev, birthday]);
+  }, []);
 
-  const handleDeleteBirthday = (id: string) => {
-    setBirthdays(birthdays.filter((b) => b.id !== id));
-  };
+  // 使用 useCallback 避免每次渲染都创建新函数
+  const handleDeleteBirthday = useCallback((id: string) => {
+    setBirthdays(prev => prev.filter((b) => b.id !== id));
+  }, []);
 
-  const handleToggleHolidays = (show: boolean) => {
+  const handleToggleHolidays = useCallback((show: boolean) => {
     setShowHolidays(show);
-  };
+  }, []);
 
-  const handleToggleReminders = (show?: boolean) => {
+  const handleToggleReminders = useCallback((show?: boolean) => {
     if (show !== undefined) {
       setShowReminders(show);
     } else {
       setShowReminders(true);
     }
-  };
+  }, []);
 
-  const handleDaysChange = (days: number) => {
+  const handleDaysChange = useCallback((days: number) => {
     setDaysToLookAhead(days);
     setShowReminders(true); // 切换天数时自动展开提醒
-  };
+  }, []);
 
   // 处理点击生日，跳转到对应月份
-  const handleBirthdayClick = (birthday: Birthday) => {
+  const handleBirthdayClick = useCallback((birthday: Birthday) => {
     const today = new Date();
     const currentYear = today.getFullYear();
 
@@ -68,7 +69,7 @@ export default function BirthdayReminderApp() {
 
     // 跳转到对应月份
     setCurrentDate(new Date(targetYear, targetMonth - 1, 1));
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">

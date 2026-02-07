@@ -72,10 +72,10 @@ export default function Calendar({ birthdays, showHolidays, currentDate: externa
     });
   };
 
-  // 获取空白天数（月初的空白格子）
-  const emptyDays = firstDay === 0 ? 6 : firstDay - 1;
+  // 获取空白天数（月初的空白格子，周日为第一天）
+  const emptyDays = firstDay;
 
-  const weekDays = ['一', '二', '三', '四', '五', '六', '日'];
+  const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
 
   return (
     <motion.div
