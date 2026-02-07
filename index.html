@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>农历生日提醒 - Lunar Birthday Reminder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+        'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 60px;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .cake {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .project-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tech-tag {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      margin-top: 40px;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="cake">🎂</div>
+      <h1>农历生日提醒</h1>
+      <p>Lunar Birthday Reminder</p>
+    </div>
+
+    <div class="projects">
+      <a href="./cursor/" class="project-card">
+        <div class="project-icon">⚡</div>
+        <div class="project-name">Cursor 版本</div>
+        <div class="project-desc">
+          轻量实现，快速响应。使用 Vite + React 构建，适合日常使用。
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Vite</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">JavaScript</span>
+        </div>
+      </a>
+
+      <a href="./gemini/" class="project-card">
+        <div class="project-icon">✨</div>
+        <div class="project-name">Gemini 版本</div>
+        <div class="project-desc">
+          AI Studio 导出版本。使用 TypeScript，类型安全，代码规范。
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Vite</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">TypeScript</span>
+        </div>
+      </a>
+
+      <a href="./kimi/" class="project-card">
+        <div class="project-icon">🌍</div>
+        <div class="project-name">Kimi 版本</div>
+        <div class="project-desc">
+          多语言支持，Tailwind 样式。国际化友好，界面美观。
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Vite</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">i18n</span>
+        </div>
+      </a>
+
+      <a href="./coze/" class="project-card">
+        <div class="project-icon">🤖</div>
+        <div class="project-name">Coze 版本</div>
+        <div class="project-desc">
+          扣子编程 CLI 创建。Next.js 16 + shadcn/ui，组件库丰富。
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Next.js 16</span>
+          <span class="tech-tag">shadcn/ui</span>
+          <span class="tech-tag">Tailwind</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="footer">
+      <p>
+        开源项目 |
+        <a href="https://github.com/wangruofeng/lunar-birthday-reminder" target="_blank">GitHub</a> |
+        农历生日，永不忘怀
+      </p>
+    </div>
+  </div>
+</body>
+</html>
