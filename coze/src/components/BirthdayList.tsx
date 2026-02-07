@@ -84,7 +84,7 @@ export default function BirthdayList({ birthdays, onDelete, onBirthdayClick }: B
                       <h3 className="font-semibold text-gray-900 text-base truncate">{birthday.name}</h3>
                       <span className="text-sm text-gray-600 flex-shrink-0">{birthday.relationship}</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-4 text-sm">
                       <span className="text-gray-500">
                         农历{birthday.lunarMonth}月{birthday.lunarDay}日
                       </span>

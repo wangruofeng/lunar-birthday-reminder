@@ -244,7 +244,6 @@ export default function App() {
             onDelete={handleDeleteBirthday}
             onEdit={handleEditBirthday}
             onJumpToMonth={handleJumpToBirthdayMonth}
-            currentYear={year}
           />
         </section>
 

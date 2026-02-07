@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CalendarCell from './CalendarCell.jsx';
-import { getMonthMatrix, getHolidayName, startOfDay, lunarBirthdayToNextSolar } from '../utils/date.js';
+import { getMonthMatrix, getHolidayName, startOfDay, lunarToSolar, lunarBirthdayToNextSolar } from '../utils/date.js';
 
 const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 const weekdayNames = ['日', '一', '二', '三', '四', '五', '六'];
@@ -15,18 +15,45 @@ export default function Calendar({ year, monthIndex, birthdays, showHolidays, to
     const map = new Map();
     let count = 0;
 
-    birthdays.forEach((b) => {
-      const targetYear = year;
-      const nextSolar = lunarBirthdayToNextSolar(
-        { lunarMonth: b.lunarMonth, lunarDay: b.lunarDay },
-        new Date(targetYear, monthIndex, 1)
-      );
+    // 对于农历12月，需要检查两个农历年份（因为会跨年到公历1月）
+    const yearsToCheck = monthIndex === 0 ? [year, year - 1] : [year];
 
-      if (!nextSolar) return;
-      if (nextSolar.getFullYear() !== year || nextSolar.getMonth() !== monthIndex) return;
+    // 先收集所有可能的生日
+    const allCandidates = []; // { birthday, solarDate, checkYear }
 
-      const day = nextSolar.getDate();
-      const key = day;
+    yearsToCheck.forEach(checkYear => {
+      birthdays.forEach((b) => {
+        // 直接计算指定年份的农历生日对应的公历日期
+        const solar = lunarToSolar(checkYear, b.lunarMonth, b.lunarDay);
+
+        if (!solar) return;
+        // 检查公历日期是否在当前显示的月份
+        if (solar.month - 1 !== monthIndex) return;
+
+        const solarDate = new Date(solar.year, solar.month - 1, solar.day);
+        allCandidates.push({ birthday: b, solarDate, checkYear, solar });
+      });
+    });
+
+    // 按生日ID分组，每个生日只保留公历日期最早的那一个
+    const byBirthdayId = new Map();
+    allCandidates.forEach(candidate => {
+      const bid = candidate.birthday.id;
+      if (!byBirthdayId.has(bid)) {
+        byBirthdayId.set(bid, candidate);
+      } else {
+        // 比较日期，保留更早的
+        const existing = byBirthdayId.get(bid);
+        if (candidate.solarDate < existing.solarDate) {
+          byBirthdayId.set(bid, candidate);
+        }
+      }
+    });
+
+    // 添加到map中
+    byBirthdayId.forEach(candidate => {
+      const { birthday: b, solar } = candidate;
+      const key = solar.day;
       if (!map.has(key)) {
         map.set(key, []);
       }

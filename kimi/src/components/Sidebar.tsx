@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Users, Plus, Trash2 } from 'lucide-react';
 import { Birthday, UpcomingBirthday } from '../types';
+import { getNextSolarBirthday } from '../utils/lunar';
 
 interface SidebarProps {
   reminders: (UpcomingBirthday & { age: number })[];
@@ -20,6 +21,7 @@ interface SidebarProps {
     later: string;
     noReminders: string;
     lunar: string;
+    solar: string;
     noBuddies: string;
   };
 }
@@ -45,29 +47,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <Users className="text-blue-400" size={20} /> {translations.buddies}
         </h2>
         <div className="overflow-y-auto max-h-[240px] custom-scrollbar space-y-2 pr-2 mb-4">
-          {birthdays.map(b => (
-            <div
-              key={b.id}
-              onClick={() => onNavigateToBirthday(b)}
-              className="group flex items-center justify-between p-2.5 rounded-[1rem] hover:bg-slate-50 transition-all cursor-pointer bg-slate-50/30"
-            >
-              <div className="min-w-0">
-                <p className="text-sm font-black text-slate-700 truncate">{b.name}</p>
-                <p className="text-[12px] text-slate-400 font-bold">
-                  {translations.lunar} {b.lunarDate.month}/{b.lunarDate.day}
-                </p>
-              </div>
-              <button
-                onClick={e => {
-                  e.stopPropagation();
-                  onDeleteBirthday(b.id);
-                }}
-                className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 text-red-400 rounded-full transition-all"
+          {birthdays.map(b => {
+            const solarDate = getNextSolarBirthday(b.lunarDate.month, b.lunarDate.day);
+            return (
+              <div
+                key={b.id}
+                onClick={() => onNavigateToBirthday(b)}
+                className="group flex items-center justify-between p-2.5 rounded-[1rem] hover:bg-slate-50 transition-all cursor-pointer bg-slate-50/30"
               >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ))}
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-black text-slate-700 truncate">{b.name}</p>
+                  <div className="flex items-center gap-3 mt-0.5">
+                    <p className="text-[12px] text-slate-500 font-bold">
+                      {translations.lunar} {b.lunarDate.month}/{b.lunarDate.day}
+                    </p>
+                    <p className="text-[12px] text-slate-400 font-bold">
+                      {translations.solar} {solarDate.getMonth() + 1}/{solarDate.getDate()}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={e => {
+                    e.stopPropagation();
+                    onDeleteBirthday(b.id);
+                  }}
+                  className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 text-red-400 rounded-full transition-all"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            );
+          })}
         </div>
         <div className="flex flex-col gap-2">
           <button

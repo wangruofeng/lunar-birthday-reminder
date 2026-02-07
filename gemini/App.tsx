@@ -11,7 +11,7 @@ const translations = {
     title: '生日记',
     slogan: '不忘每一个重要日子',
     recent: '最近提醒',
-    buddies: '小伙伴们',
+    buddies: '生日列表',
     add: '新增小伙伴',
     check: '检查提醒',
     showHolidays: '显示节日',
@@ -304,17 +304,23 @@ const App: React.FC = () => {
                             <Users className="text-blue-400" size={16} /> {t('buddies')}
                         </h2>
                         <div className="overflow-y-auto flex-1 custom-scrollbar space-y-1.5 pr-1.5 mb-3 min-h-0" data-testid="birthdays-list">
-                            {birthdays.map(b => (
-                                <div key={b.id} onClick={() => navigateToBirthday(b)} className="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-all cursor-pointer bg-slate-50/30" data-testid={`birthday-item-${b.id}`}>
-                                    <div className="min-w-0">
-                                        <p className="text-sm font-semibold text-slate-700 truncate">{b.name}</p>
-                                        <p className="text-xs text-slate-400 font-medium">{t('lunar')} {b.lunarDate.month}/{b.lunarDate.day}</p>
+                            {birthdays.map(b => {
+                                const solarDate = getNextSolarBirthday(b.lunarDate.month, b.lunarDate.day);
+                                return (
+                                    <div key={b.id} onClick={() => navigateToBirthday(b)} className="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-all cursor-pointer bg-slate-50/30" data-testid={`birthday-item-${b.id}`}>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-sm font-semibold text-slate-700 truncate">{b.name}</p>
+                                            <div className="flex items-center gap-3 mt-0.5">
+                                                <p className="text-xs text-slate-500 font-medium">{t('lunar')} {b.lunarDate.month}/{b.lunarDate.day}</p>
+                                                <p className="text-xs text-slate-400 font-medium">{t('solar')} {solarDate.getMonth() + 1}/{solarDate.getDate()}</p>
+                                            </div>
+                                        </div>
+                                        <button onClick={(e) => { e.stopPropagation(); deleteBirthday(b.id); }} className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 text-red-400 rounded-full transition-all" data-testid={`delete-button-${b.id}`}>
+                                            <Trash2 size={12} />
+                                        </button>
                                     </div>
-                                    <button onClick={(e) => { e.stopPropagation(); deleteBirthday(b.id); }} className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 text-red-400 rounded-full transition-all" data-testid={`delete-button-${b.id}`}>
-                                        <Trash2 size={12} />
-                                    </button>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                         <div className="flex flex-col gap-1.5 flex-shrink-0">
                             <button onClick={() => setShowForm(true)} className="w-full bg-pink-500 text-white py-2.5 rounded-full flex items-center justify-center gap-1.5 font-semibold text-xs shadow-lg shadow-pink-100" data-testid="add-birthday-button">

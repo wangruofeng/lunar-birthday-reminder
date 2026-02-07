@@ -677,6 +677,13 @@ input::placeholder {
   color: rgba(74, 85, 104, 0.5);
 }
 
+.cell-invisible {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 .cell-today {
   border-color: var(--color-coral);
   border-width: 2px;

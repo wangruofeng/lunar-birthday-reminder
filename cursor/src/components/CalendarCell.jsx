@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { solarToLunar } from '../utils/date.js';
 
@@ -11,7 +11,33 @@ export default function CalendarCell({
   isUpcomingBirthdayDay
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState('bottom');
+  const cellRef = useRef(null);
   const hasBirthday = birthdays.length > 0;
+
+  // 检测tooltip是否会超出边界
+  useEffect(() => {
+    if (isHovered && cellRef.current && hasBirthday) {
+      const cell = cellRef.current;
+      const rect = cell.getBoundingClientRect();
+      const tooltipWidth = 260; // 预估tooltip宽度
+
+      // 检查左右边界
+      const spaceLeft = rect.left;
+      const spaceRight = window.innerWidth - rect.right;
+
+      // 如果左右空间都不够，则向上显示
+      if (spaceLeft < 20 && spaceRight < 20) {
+        setTooltipPosition('top');
+      }
+      // 检查上方是否是第一行（已经有CSS处理了）
+      else if (rect.top < 300) {
+        setTooltipPosition('top');
+      } else {
+        setTooltipPosition('bottom');
+      }
+    }
+  }, [isHovered, hasBirthday]);
 
   const lunarInfo = inCurrentMonth ? solarToLunar(date) : null;
   // solarlunar 库返回的字段：monthCn (如"正月") 和 dayCn (如"初一")
@@ -19,9 +45,14 @@ export default function CalendarCell({
     ? `${lunarInfo.monthCn}${lunarInfo.dayCn}` 
     : '';
 
+  // 非当前月份的单元格完全不可见
+  if (!inCurrentMonth) {
+    return <div className="calendar-cell cell-invisible"></div>;
+  }
+
   const baseClasses = [
     'calendar-cell',
-    inCurrentMonth ? 'cell-current' : 'cell-outside',
+    'cell-current',
     isToday ? 'cell-today' : '',
     hasBirthday ? 'cell-birthday' : '',
     holidayName ? 'cell-holiday' : ''
@@ -64,9 +95,15 @@ export default function CalendarCell({
         <div className="cell-tooltip-wrapper">
           <motion.div
             className="cell-tooltip"
-            initial={{ opacity: 0, y: 8, scale: 0.95 }}
+            style={{
+              left: tooltipPosition === 'bottom' ? '50%' : '50%',
+              bottom: tooltipPosition === 'bottom' ? 'calc(100% + 12px)' : 'auto',
+              top: tooltipPosition === 'top' ? 'calc(100% + 12px)' : 'auto',
+              transform: 'translateX(-50%)'
+            }}
+            initial={{ opacity: 0, y: tooltipPosition === 'bottom' ? 8 : -8, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.95 }}
+            exit={{ opacity: 0, y: tooltipPosition === 'bottom' ? 8 : -8, scale: 0.95 }}
             transition={{
               duration: 0.2,
               ease: [0.16, 1, 0.3, 1]
@@ -123,6 +160,7 @@ export default function CalendarCell({
 
   return (
     <motion.div
+      ref={cellRef}
       className={baseClasses}
       title={tooltipText}
       onMouseEnter={() => setIsHovered(true)}

@@ -8,7 +8,7 @@ export const translations: Record<LangCode, Translations> = {
     title: '生日历',
     slogan: '农历生日，一个都不忘',
     recent: '最近提醒',
-    buddies: '小伙伴们',
+    buddies: '生日列表',
     add: '新增小伙伴',
     check: '检查提醒',
     showHolidays: '显示中国法定节假日',

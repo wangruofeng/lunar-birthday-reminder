@@ -90,6 +90,7 @@ const App: React.FC = () => {
             later: t('later'),
             noReminders: t('noReminders'),
             lunar: t('lunar'),
+            solar: t('solar'),
             noBuddies: t('noBuddies')
           }}
         />

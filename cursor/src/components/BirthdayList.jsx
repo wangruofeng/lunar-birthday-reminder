@@ -6,9 +6,11 @@ export default function BirthdayList({
   birthdays,
   onDelete,
   onEdit,
-  onJumpToMonth,
-  currentYear
+  onJumpToMonth
 }) {
+  // 始终使用真实的当前年份，而不是日历显示的年份
+  const realCurrentYear = new Date().getFullYear();
+
   return (
     <motion.div
       layout
@@ -37,9 +39,9 @@ export default function BirthdayList({
             </motion.div>
           ) : (
             birthdays.map((b) => {
-              // 计算今年（当前年份）这个农历生日对应的公历日期
+              // 计算今年（真实当前年份）这个农历生日对应的公历日期
               const solar = lunarToSolar(
-                currentYear,
+                realCurrentYear,
                 b.lunarMonth,
                 b.lunarDay
               );
