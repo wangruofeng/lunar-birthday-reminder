@@ -26,6 +26,11 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
       - name: Build cursor project
         run: |
           echo "Building cursor..."
@@ -51,9 +56,9 @@ jobs:
         run: |
           echo "Building coze..."
           cd coze
-          npm ci --legacy-peer-deps
+          pnpm install
           # Set basePath for GitHub Pages
-          BASE_PATH=/coze ASSET_PREFIX=/coze npm run build
+          BASE_PATH=/coze ASSET_PREFIX=/coze pnpm run build
 
       - name: Prepare deployment
         run: |
