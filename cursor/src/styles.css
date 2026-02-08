@@ -1022,3 +1022,53 @@ input::placeholder {
 .add-birthday-btn svg {
   flex-shrink: 0;
 }
+
+/* Info Tooltip */
+.info-tooltip-wrapper {
+  position: relative !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+.info-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  cursor: help;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+
+.info-icon-btn:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: none;
+}
+
+.info-tooltip {
+  position: fixed;
+  z-index: 99999;
+  min-width: 280px;
+  max-width: 400px;
+  width: max-content;
+}
+
+.info-tooltip-content {
+  background: rgba(45, 55, 72, 0.98);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  white-space: normal;
+  word-wrap: break-word;
+}

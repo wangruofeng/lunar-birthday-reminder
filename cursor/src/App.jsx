@@ -6,6 +6,7 @@ import ReminderPanel from './components/ReminderPanel.jsx';
 import Calendar from './components/Calendar.jsx';
 import HolidayToggle from './components/HolidayToggle.jsx';
 import Modal from './components/Modal.jsx';
+import InfoTooltip from './components/InfoTooltip.jsx';
 import { daysBetween, lunarBirthdayToNextSolar, startOfDay } from './utils/date.js';
 
 const STORAGE_KEY = 'birthday-reminder:list';
@@ -221,8 +222,9 @@ export default function App() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ marginRight: '8px' }}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path
                   d="M10 4V16M4 10H16"
                   stroke="currentColor"
@@ -231,6 +233,10 @@ export default function App() {
                 />
               </svg>
               添加生日
+              <InfoTooltip>
+                提示：生日以农历录入，但所有提醒和日历标注均基于换算后的公历日期，以便与日常行程更好对齐。
+                你可以在左侧列表中点击某个生日，快速跳转到对应的生日月份。
+              </InfoTooltip>
             </motion.button>
 
             <ReminderPanel
@@ -292,23 +298,6 @@ export default function App() {
             showHolidays={showHolidays}
             today={today}
           />
-
-          <AnimatePresence>
-            {birthdays.length > 0 && (
-              <motion.div
-                className="card tip-card"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{ duration: 0.25 }}
-              >
-                <p className="tip-text">
-                  提示：生日以农历录入，但所有提醒和日历标注均基于换算后的公历日期，以便与日常行程更好对齐。
-                  你可以在左侧列表中点击某个生日，快速跳转到对应的生日月份。
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </section>
       </main>
 
