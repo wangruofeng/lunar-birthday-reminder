@@ -254,49 +254,19 @@ export default function App() {
         </section>
 
         <section className="right-column">
-          <motion.div
-            className="calendar-toolbar card"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div className="toolbar-row">
-              <div className="toolbar-left">
-                <motion.button
-                  className="btn-ghost"
-                  onClick={goPrevMonth}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  上一月
-                </motion.button>
-                <motion.button
-                  className="btn-text"
-                  onClick={() => {
-                    setYear(today.getFullYear());
-                    setMonthIndex(today.getMonth());
-                  }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  回到本月
-                </motion.button>
-                <motion.button
-                  className="btn-ghost"
-                  onClick={goNextMonth}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  下一月
-                </motion.button>
-              </div>
-              <HolidayToggle enabled={showHolidays} onToggle={setShowHolidays} />
-            </div>
-          </motion.div>
-
           <Calendar
             year={year}
             monthIndex={monthIndex}
             birthdays={birthdays}
             showHolidays={showHolidays}
+            onToggleHolidays={setShowHolidays}
             today={today}
+            goPrevMonth={goPrevMonth}
+            goNextMonth={goNextMonth}
+            goToToday={() => {
+              setYear(today.getFullYear());
+              setMonthIndex(today.getMonth());
+            }}
           />
         </section>
       </main>

@@ -32,9 +32,38 @@ export default function BirthdayForm({ onSave, editingBirthday }) {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // 表单校验
+  const isFormValid = () => {
+    const name = form.name.trim();
+    const lunarYear = form.lunarYear.trim();
+    const lunarMonth = form.lunarMonth.trim();
+    const lunarDay = form.lunarDay.trim();
+
+    // 姓名必填
+    if (!name) return false;
+
+    // 农历月份必填，且在 1-12 之间
+    if (!lunarMonth) return false;
+    const monthNum = Number(lunarMonth);
+    if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) return false;
+
+    // 农历日期必填，且在 1-30 之间
+    if (!lunarDay) return false;
+    const dayNum = Number(lunarDay);
+    if (isNaN(dayNum) || dayNum < 1 || dayNum > 30) return false;
+
+    // 农历年份可选，如果填写了需要校验（1900-2100）
+    if (lunarYear) {
+      const yearNum = Number(lunarYear);
+      if (isNaN(yearNum) || yearNum < 1900 || yearNum > 2100) return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name || !form.lunarMonth || !form.lunarDay) return;
+    if (!isFormValid()) return;
 
     const base = {
       name: form.name.trim(),
@@ -121,11 +150,12 @@ export default function BirthdayForm({ onSave, editingBirthday }) {
 
       <div className="form-actions">
         <motion.button
-          whileTap={{ scale: 0.97 }}
-          whileHover={{ scale: 1.01 }}
+          whileTap={isFormValid() ? { scale: 0.97 } : {}}
+          whileHover={isFormValid() ? { scale: 1.01 } : {}}
           transition={{ duration: 0.15 }}
           type="submit"
           className="btn-primary"
+          disabled={!isFormValid()}
         >
           保存
         </motion.button>

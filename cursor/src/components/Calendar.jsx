@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CalendarCell from './CalendarCell.jsx';
+import HolidayToggle from './HolidayToggle.jsx';
 import { getMonthMatrix, getHolidayName, startOfDay, lunarToSolar, lunarBirthdayToNextSolar } from '../utils/date.js';
 
 const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 const weekdayNames = ['日', '一', '二', '三', '四', '五', '六'];
 
-export default function Calendar({ year, monthIndex, birthdays, showHolidays, today }) {
+export default function Calendar({ year, monthIndex, birthdays, showHolidays, onToggleHolidays, today, goPrevMonth, goNextMonth, goToToday }) {
   const todayStart = startOfDay(today);
 
   const { cells, birthdayMap, upcomingDays, monthBirthdayCount } = useMemo(() => {
@@ -93,13 +94,13 @@ export default function Calendar({ year, monthIndex, birthdays, showHolidays, to
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
     >
-      <div className="card-header calendar-header">
-        <div>
+      <div className="calendar-card-header">
+        <div className="calendar-title-row">
           <h2 className="card-title">
             {year} 年 {monthNames[monthIndex]}
           </h2>
-          <p className="card-subtitle">支持生日标记、节假日标识与今日高亮。</p>
         </div>
+
         <div className="calendar-meta">
           <span className="calendar-meta-label">本月生日人数：</span>
           <AnimatePresence mode="wait" initial={false}>
@@ -115,6 +116,33 @@ export default function Calendar({ year, monthIndex, birthdays, showHolidays, to
             </motion.span>
           </AnimatePresence>
         </div>
+      </div>
+
+      <div className="calendar-controls-row">
+        <div className="calendar-controls">
+          <motion.button
+            className="btn-ghost btn-small"
+            onClick={goPrevMonth}
+            whileTap={{ scale: 0.95 }}
+          >
+            上一月
+          </motion.button>
+          <motion.button
+            className="btn-text btn-small"
+            onClick={goToToday}
+            whileTap={{ scale: 0.96 }}
+          >
+            回到本月
+          </motion.button>
+          <motion.button
+            className="btn-ghost btn-small"
+            onClick={goNextMonth}
+            whileTap={{ scale: 0.95 }}
+          >
+            下一月
+          </motion.button>
+        </div>
+        <HolidayToggle enabled={showHolidays} onToggle={onToggleHolidays} />
       </div>
 
       <div className="calendar-grid-wrapper">
