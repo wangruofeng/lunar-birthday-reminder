@@ -6,6 +6,7 @@ import ReminderPanel from './components/ReminderPanel.jsx';
 import Calendar from './components/Calendar.jsx';
 import HolidayToggle from './components/HolidayToggle.jsx';
 import Modal from './components/Modal.jsx';
+import BirthdayDetailModal from './components/BirthdayDetailModal.jsx';
 import InfoTooltip from './components/InfoTooltip.jsx';
 import { daysBetween, lunarBirthdayToNextSolar, startOfDay } from './utils/date.js';
 
@@ -20,6 +21,9 @@ export default function App() {
   const [editingBirthday, setEditingBirthday] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedBirthdays, setSelectedBirthdays] = useState([]);
 
   const today = useMemo(() => startOfDay(new Date()), []);
   const [year, setYear] = useState(today.getFullYear());
@@ -188,6 +192,22 @@ export default function App() {
     });
   };
 
+  // 打开生日详情弹框
+  const handleOpenBirthdayDetail = (date, birthdaysOnDay) => {
+    setSelectedDate(date);
+    setSelectedBirthdays(birthdaysOnDay);
+    setDetailModalOpen(true);
+  };
+
+  // 关闭生日详情弹框
+  const handleCloseDetailModal = () => {
+    setDetailModalOpen(false);
+    setTimeout(() => {
+      setSelectedDate(null);
+      setSelectedBirthdays([]);
+    }, 300);
+  };
+
   return (
     <div className="app-root">
       <header className="app-header">
@@ -267,6 +287,7 @@ export default function App() {
               setYear(today.getFullYear());
               setMonthIndex(today.getMonth());
             }}
+            onOpenBirthdayDetail={handleOpenBirthdayDetail}
           />
         </section>
       </main>
@@ -282,6 +303,14 @@ export default function App() {
           editingBirthday={editingBirthday}
         />
       </Modal>
+
+      {/* 生日详情弹框 */}
+      <BirthdayDetailModal
+        isOpen={detailModalOpen}
+        onClose={handleCloseDetailModal}
+        date={selectedDate}
+        birthdays={selectedBirthdays}
+      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { solarToLunar } from '../utils/date.js';
 
@@ -8,36 +8,10 @@ export default function CalendarCell({
   isToday,
   birthdays = [],
   holidayName,
-  isUpcomingBirthdayDay
+  isUpcomingBirthdayDay,
+  onClick
 }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [tooltipPosition, setTooltipPosition] = useState('bottom');
-  const cellRef = useRef(null);
   const hasBirthday = birthdays.length > 0;
-
-  // 检测tooltip是否会超出边界
-  useEffect(() => {
-    if (isHovered && cellRef.current && hasBirthday) {
-      const cell = cellRef.current;
-      const rect = cell.getBoundingClientRect();
-      const tooltipWidth = 260; // 预估tooltip宽度
-
-      // 检查左右边界
-      const spaceLeft = rect.left;
-      const spaceRight = window.innerWidth - rect.right;
-
-      // 如果左右空间都不够，则向上显示
-      if (spaceLeft < 20 && spaceRight < 20) {
-        setTooltipPosition('top');
-      }
-      // 检查上方是否是第一行（已经有CSS处理了）
-      else if (rect.top < 300) {
-        setTooltipPosition('top');
-      } else {
-        setTooltipPosition('bottom');
-      }
-    }
-  }, [isHovered, hasBirthday]);
 
   const lunarInfo = inCurrentMonth ? solarToLunar(date) : null;
   // solarlunar 库返回的字段：monthCn (如"正月") 和 dayCn (如"初一")
@@ -60,15 +34,6 @@ export default function CalendarCell({
     .filter(Boolean)
     .join(' ');
 
-  const tooltipText = [
-    hasBirthday
-      ? birthdays.map((b) => `${b.name}${b.relation ? `（${b.relation}）` : ''}`).join('、')
-      : '',
-    holidayName ? `节日：${holidayName}` : ''
-  ]
-    .filter(Boolean)
-    .join(' ｜ ');
-
   const content = (
     <div className="cell-inner">
       <div className="cell-date-row">
@@ -90,49 +55,6 @@ export default function CalendarCell({
           </motion.span>
         )}
       </div>
-
-      {hasBirthday && isHovered && (
-        <div className="cell-tooltip-wrapper">
-          <motion.div
-            className="cell-tooltip"
-            style={{
-              left: tooltipPosition === 'bottom' ? '50%' : '50%',
-              bottom: tooltipPosition === 'bottom' ? 'calc(100% + 12px)' : 'auto',
-              top: tooltipPosition === 'top' ? 'calc(100% + 12px)' : 'auto',
-              transform: 'translateX(-50%)'
-            }}
-            initial={{ opacity: 0, y: tooltipPosition === 'bottom' ? 8 : -8, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: tooltipPosition === 'bottom' ? 8 : -8, scale: 0.95 }}
-            transition={{
-              duration: 0.2,
-              ease: [0.16, 1, 0.3, 1]
-            }}
-          >
-            <div className="cell-tooltip-header">
-              <span className="cell-tooltip-icon">🎂</span>
-              <span className="cell-tooltip-title">当日生日</span>
-              <span className="cell-tooltip-count">({birthdays.length})</span>
-            </div>
-            <div className="cell-tooltip-divider"></div>
-            <div className="cell-tooltip-list">
-              {birthdays.map((b) => (
-                <div key={b.id} className="cell-tooltip-item">
-                  <div className="cell-tooltip-name-row">
-                    <span className="cell-tooltip-name">{b.name}</span>
-                    {b.relation && (
-                      <span className="cell-tooltip-relation">（{b.relation}）</span>
-                    )}
-                  </div>
-                  <div className="cell-tooltip-meta">
-                    农历 {b.lunarMonth} 月 {b.lunarDay} 日
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      )}
     </div>
   );
 
@@ -158,13 +80,27 @@ export default function CalendarCell({
     };
   }
 
+  const tooltipText = [
+    hasBirthday
+      ? birthdays.map((b) => `${b.name}${b.relation ? `（${b.relation}）` : ''}`).join('、')
+      : '',
+    holidayName ? `节日：${holidayName}` : ''
+  ]
+    .filter(Boolean)
+    .join(' ｜ ');
+
+  const handleClick = () => {
+    if (hasBirthday && onClick) {
+      onClick();
+    }
+  };
+
   return (
     <motion.div
-      ref={cellRef}
       className={baseClasses}
       title={tooltipText}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
+      style={{ cursor: hasBirthday ? 'pointer' : 'default' }}
       {...motionProps}
     >
       {content}

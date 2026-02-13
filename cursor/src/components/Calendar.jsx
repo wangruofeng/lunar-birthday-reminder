@@ -7,7 +7,7 @@ import { getMonthMatrix, getHolidayName, startOfDay, lunarToSolar, lunarBirthday
 const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 const weekdayNames = ['日', '一', '二', '三', '四', '五', '六'];
 
-export default function Calendar({ year, monthIndex, birthdays, showHolidays, onToggleHolidays, today, goPrevMonth, goNextMonth, goToToday }) {
+export default function Calendar({ year, monthIndex, birthdays, showHolidays, onToggleHolidays, today, goPrevMonth, goNextMonth, goToToday, onOpenBirthdayDetail }) {
   const todayStart = startOfDay(today);
 
   const { cells, birthdayMap, upcomingDays, monthBirthdayCount } = useMemo(() => {
@@ -179,6 +179,11 @@ export default function Calendar({ year, monthIndex, birthdays, showHolidays, on
                   birthdays={birthdaysOnDay}
                   holidayName={holidayName}
                   isUpcomingBirthdayDay={isUpcoming}
+                  onClick={() => {
+                    if (birthdaysOnDay.length > 0) {
+                      onOpenBirthdayDetail(cell.date, birthdaysOnDay);
+                    }
+                  }}
                 />
               );
             })}
